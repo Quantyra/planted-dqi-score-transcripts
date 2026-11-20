@@ -7,6 +7,7 @@ authors:
     affiliation: "Quantyra Inc."
     orcid: "https://orcid.org/0009-0002-9123-7435"
 version: "1.0.0"
+doi: "10.5281/zenodo.24407287"
 license: CC-BY-4.0
 repository-code: "https://github.com/Quantyra/planted-dqi-score-transcripts"
 preferred-citation:
@@ -17,4 +18,5 @@ preferred-citation:
       given-names: Daniel
       orcid: "https://orcid.org/0009-0002-9123-7435"
   year: 2026
-  url: "https://github.com/Quantyra/planted-dqi-score-transcripts"
+  doi: "10.5281/zenodo.24407287"
+  url: "https://zenodo.org/records/24407287"

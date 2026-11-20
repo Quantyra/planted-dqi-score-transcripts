@@ -2,6 +2,8 @@
 
 Daniel Fredriksen, Quantyra Inc. · [Manuscript PDF](manuscript.pdf) · [LaTeX source](manuscript.tex) · [ORCID](https://orcid.org/0009-0002-9123-7435)
 
+Version 1.0.0 was published on November 20, 2026. [Cite this version](https://doi.org/10.5281/zenodo.24407287) · [All versions](https://doi.org/10.5281/zenodo.24407286)
+
 Can a sequence of ordinary decoded quantum interferometry (DQI) scores reveal a planted polynomial even when the algorithm almost never measures the polynomial itself? On the random low-rate balanced-list family studied here, every score-only policy using polynomially many fresh shots has negligible distinguishing advantage. The experiment retains one table across the whole transcript and allows the observer to change the degree weights after every score.
 
 The preprint gives an explicit total-variation bound and a separate sharp probability for observing a unique high-scoring witness. Access to the written table, coefficient labels and joint register measurements poses different questions.

@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "Please cite the preprint when using this result."
+title: "Adaptive score measurements in decoded quantum interferometry on planted polynomial lists"
+authors:
+  - family-names: Fredriksen
+    given-names: Daniel
+    affiliation: "Quantyra Inc."
+    orcid: "https://orcid.org/0009-0002-9123-7435"
+version: "1.0.0"
+license: CC-BY-4.0
+repository-code: "https://github.com/Quantyra/planted-dqi-score-transcripts"
+preferred-citation:
+  type: unpublished
+  title: "Adaptive score measurements in decoded quantum interferometry on planted polynomial lists"
+  authors:
+    - family-names: Fredriksen
+      given-names: Daniel
+      orcid: "https://orcid.org/0009-0002-9123-7435"
+  year: 2026
+  url: "https://github.com/Quantyra/planted-dqi-score-transcripts"

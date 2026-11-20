@@ -1,0 +1,16 @@
+{
+  "title": "Adaptive score measurements in decoded quantum interferometry on planted polynomial lists",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "For random balanced lists over a finite field at q = k^4, polynomially many standard decoded quantum interferometry score measurements reveal negligible information about whether a degree-below-k polynomial was planted. We prove a total-variation bound for the complete adaptive score transcript on a single reused table, uniformly in the fixed plant. A separate estimate gives the exact optimal one-shot probability of measuring a specified perfect fit. The comparison covers scores returned from fresh ideal preparations and does not establish hardness for algorithms that inspect the written table.",
+  "creators": [{"name": "Fredriksen, Daniel", "affiliation": "Quantyra Inc.", "orcid": "0009-0002-9123-7435"}],
+  "license": "CC-BY-4.0",
+  "version": "1.0.0",
+  "keywords": ["decoded quantum interferometry", "quantum algorithms", "polynomial interpolation", "planted problems", "total variation distance"],
+  "related_identifiers": [
+    {"identifier": "10.1038/s41586-025-09527-5", "scheme": "doi", "relation": "references"},
+    {"identifier": "10.48550/arXiv.2607.28120", "scheme": "doi", "relation": "references"},
+    {"identifier": "10.48550/arXiv.1408.5681", "scheme": "doi", "relation": "references"},
+    {"identifier": "10.4230/LIPIcs.ICALP.2016.16", "scheme": "doi", "relation": "references"}
+  ]
+}

@@ -1,0 +1,116 @@
+\documentclass[11pt]{article}
+\usepackage[left=1in,right=1in,top=.90in,bottom=.90in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Adaptive score measurements in decoded quantum interferometry on planted polynomial lists},pdfauthor={Daniel Fredriksen}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\newcommand{\F}{\mathbb F}
+\newcommand{\E}{\mathbb E}
+\newcommand{\TV}{\operatorname{TV}}
+\newcommand{\Bin}{\operatorname{Bin}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\title{Adaptive score measurements in decoded quantum interferometry on planted polynomial lists}
+\author{Daniel Fredriksen\\{\small Quantyra Inc., Las Vegas, Nevada, USA}\\
+{\small \href{https://orcid.org/0009-0002-9123-7435}{ORCID 0009-0002-9123-7435}}}
+\date{November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+A hidden polynomial can satisfy every list in a fitting problem while almost every observed score in decoded quantum interferometry (DQI) conceals whether a polynomial was planted. We prove this for independent balanced lists on $\F_q$, with degree below $k$, $q=k^4$, and DQI degree $k/2$. An observer reuses one random table for $R$ fresh preparations and can change the degree weights after each score. Under either the planted or the null law, the entire score transcript is within $R\exp[-\tfrac12 k\log k+O(k)]$ in total variation of an efficiently sampleable, table-independent process. The proof compares the coincidence patterns of two random polynomials and a fixed plant, including the exceptional events on which entire polynomials coincide. Separately, a typical planted table has a single polynomial above an explicit threshold. We give its exact optimal measurement probability for the standard score state. The observer receives only scores. The results leave the complexity of distinguishing the explicitly supplied tables open.
+\end{abstract}
+
+\section{Which part of a DQI measurement detects a plant?}
+Decoded quantum interferometry prepares a distribution on assignments biased toward high objective values~\cite{jordan}. In optimal polynomial intersection, an assignment gives the coefficients of a polynomial and its score counts the lists it meets. Failure to measure a perfect fit leaves a second possibility: even moderate scores might change their distribution enough to reveal a plant. In particular, repeated preparations on the \emph{same} input retain correlations invisible in an ensemble-averaged one-shot law. Our main theorem controls that experiment.
+
+Fix $k=2^a\ge4$, $q=k^4$, $\ell=k/2$, and $d=\ell+1$. A table $T=(S_x)_{x\in\F_q}$ has one subset of size $q/2$ in each row. Under the null law these subsets are independent and uniform. Under the planted law fix any $P\in\F_q[X]$ of degree below $k$ (including zero), and draw the rows independently and uniformly subject to $P(x)\in S_x$. The bounds are uniform in $P$ and hence apply to mixtures over plants. Under the null, $P$ will denote any fixed reference polynomial used only in the proof. For an assignment $A\in\F_q^k$, identified with its polynomial, put $s_T(A)=\#\{x:A(x)\in S_x\}$. Write $H_T(s)$ for the fraction of assignments scoring $s$ and define
+\[
+ b_s=2^{-q}\binom qs,\qquad
+ U_t(s)=\frac{[z^t](1+z)^s(1-z)^{q-s}}{\sqrt{\binom qt}},
+ \qquad F_w(s)=\sum_{t=0}^{\ell}w_t U_t(s).
+\]
+One ideal preparation uses the standard balanced-list DQI score state with weights $w\in\mathbb C^d$, $\|w\|_2=1$. Its coefficient amplitude at $A$ is $q^{-k/2}F_w(s_T(A))$~\cite{jordan}. Only the scalar score of the measured assignment is returned. The observer starts with information independent of the experiment, chooses $w$ using private coins and earlier scores, and may stop by shot $R$. Preparations are independent conditional on the table and each chosen setting. The observer has no table, coefficient label, quantum memory of a preparation, or side channel. The reference process uses the same policy and returns score $s$ with probability $p_{*,w}(s)=b_s|F_w(s)|^2$.
+
+\begin{theorem}\label{thm:main}
+For either ensemble, the law of the complete score transcript, averaged over a single draw of $T$, has total variation distance at most $\min(1,Ru_k)$ from the reference process, where $u_k=\exp[-\tfrac12 k\log k+O(k)]$ can be taken as in~\eqref{eq:uk}. Outside a set of tables of ensemble probability at most $\min(1,\sqrt{u_k})$, the conditional transcript distance is at most $\min(1,R\sqrt{u_k})$, simultaneously for all such policies. In particular the two ensemble transcript laws differ by at most $2Ru_k$.
+\end{theorem}
+
+For polynomially many shots in the written input length, even the best decision based on these scores has negligible distinguishing advantage. Each setting still has its own generally nonbinomial reference distribution. The cost of visiting the perfect assignment is a different quantity, computed in Section~\ref{sec:witness}.
+
+\paragraph{Relation to previous results.}
+Jordan et al.\ give the DQI state and its symmetric-polynomial score basis~\cite{jordan}. Gil-Fuster et al.\ relate DQI moments to a reweighted binomial law and study Markov chains for sampling assignments~\cite{gil}. In their moment theorem with dual distance $d^\perp$, the guaranteed moment orders satisfy $j<d^\perp-2\ell$. Here $d^\perp=k+1$ by the Vandermonde property; at $2\ell=k$, that range gives normalization. Mazumder and Niroula bound guaranteed objective improvement over a classical completion baseline under worst-case Hamming decoding~\cite{mazumder}. Their comparison concerns optimization quality. Our comparison in total variation uses randomness of the \emph{rows}, including conditioning on a perfect fit. Bazzi bounds the deviation of a random coset's weight enumerator from binomial for a fixed binary linear code under a bilateral dual-distance assumption~\cite{bazzi}. Independently chosen half-field indicators need not give a binary linear image or a random coset of one. We compare two random polynomial evaluations on the same table before applying the DQI weight. Childs et al.\ already use the moment-syndrome image to bound success in polynomial interpolation~\cite{childs}; we use that counting argument as a benchmark, not a new interpolation bound.
+
+\section{An envelope for all degree weights}
+For fixed $T$ and uniform $A$, the signs $\sigma_x=2{\bf1}_{S_x}(A(x))-1$ are unbiased and $k$-wise independent. Indeed evaluation at any $j\le k$ distinct points is a surjective linear map of rank $j$. Products $\prod_{x\in I}\sigma_x$ for $|I|\le\ell$ are orthonormal, because a nonempty symmetric difference of two such sets contains at most $2\ell\le k$ rows. The sum of the products with $|I|=t$, divided by $\sqrt{\binom qt}$, is $U_t(s_T(A))$ by coefficient extraction. The allowed degree attains the boundary $2\ell=k$. This proves that $(U_t)$ is orthonormal under $H_T$; the same argument with independent fair signs proves orthonormality under $b$. The score law $p_{T,w}=H_T |F_w|^2$ and the reference are therefore normalized for every setting.
+
+Define the positive envelope and two probability measures by
+\[
+ h(s)=d^{-1}\sum_{t=0}^{\ell}U_t(s)^2,\quad
+ B=\sum_{t=0}^{\ell}\binom qt,\qquad \mu_T=hH_T,\quad \mu_*=hb.
+\]
+The pointwise bound $|U_t(s)|\le\sqrt{\binom qt}$ gives $h(s)\le B/d\le B$. Cauchy--Schwarz gives $|F_w(s)|^2\le d h(s)$ and hence
+\begin{equation}\label{eq:env}
+ \sup_w\TV(p_{T,w},p_{*,w})\le d\,\TV(\mu_T,\mu_*).
+\end{equation}
+We will bound the fluctuations of $\mu_T$. Matching low-degree moments alone does not supply the required estimate.
+
+\section{Two scores on one table}
+Draw two independent uniform polynomials $A,C$ of degree below $k$, independently of $T$. Their conditional score law is $H_T\otimes H_T$. As a comparison, replace them by two independent uniform functions $\F_q\to\F_q$. Conditional on any balanced $T$, the two function scores are independent $\Bin(q,1/2)$ variables. Weight the score pair $(s,t)$ by $h(s)h(t)$. After averaging over $T$, the resulting laws are $\E(\mu_T\otimes\mu_T)$ and $\mu_*\otimes\mu_*$ respectively.
+
+At each row record the full equality partition of the three values $A(x),C(x),P(x)$, using any fixed reference polynomial $P$ for the null ensemble. Call the row active when at least two agree, and call the nontrivial partition its color: $A=C\ne P$, $A=P\ne C$, $C=P\ne A$, or $A=C=P$, with values evaluated at that row. The polynomial and function models agree on the joint colors of every set of at most $k$ rows. For functions the row colors are independent and the probability of activity is $\rho=1-(q-1)(q-2)/q^2\le3/q$.
+
+\begin{lemma}\label{lem:sift}
+The $\ell_1$ distance of the two full pattern laws is at most $2(2^k+1)3^k/k!$.
+\end{lemma}
+\begin{proof}
+Fix a colored support $S$ of size $r<k$. Expand the event of no extra active row by inclusion--exclusion through order $k-r-1$, retaining the specified colors on $S$. The partial sums agree. For either law the next inclusion--exclusion term bounds the absolute error by the Bonferroni inequalities. In detail, the bound is the sum, over disjoint $J$ of size $k-r$, of the probability of the prescribed colors on $S$ and activity on $J$. Summing this error over colors and supports gives $\binom qk\binom kr\rho^k$, because the $k$ selected rows match the independent law. Each law gives mass at most $\binom qk\rho^k$ to supports of size at least $k$ by counting active $k$-subsets. Sum both errors and both tails, and use $\binom qk\rho^k\le3^k/k!$.
+\end{proof}
+
+Within either table ensemble the conditional hit-bit kernel given the pattern is common to the polynomial and function models. To see why, fix all values of $A,C$ first. Rows of $T$ are independent; each row law is invariant under symbol permutations fixing $P(x)$. The conditional pair of hit bits thus depends only on the row color. Integrating over compatible field values leaves that same product kernel. The planted and null kernels themselves may differ.
+
+On an inactive planted row, two distinct nonplant symbols are tested in a population of $q-1$ with $q/2-1$ hits and $q/2$ misses. Each of the four bit pairs has probability at most $(q/2)^2/[(q-1)(q-2)]$, by sampling without replacement. This bound also holds for distinct symbols on a null row. An active row costs a density factor of at most four relative to two independent fair bits. If $u$ rows are active, the likelihood ratio for a full pair of bit strings relative to independent fair bits is at most $e^4 4^u$. Indeed $[q^2/((q-1)(q-2))]^q\le e^4$ for $q\ge8$, using $-\log(1-z)\le z/(1-z)$. Since $\sum b_s h(s)=1$, the conditional kernel weighted by $h(s)h(t)$ has total mass at most $e^4 4^u$.
+
+Put $m=3(k-1)$. For $u\le m$ multiply the pattern distance in Lemma~\ref{lem:sift} by $e^4 4^m$. On the polynomial side, $u>m$ implies $A=C$, $A=P$, or $C=P$: three nonzero differences can have at most $3(k-1)$ roots between them. The exceptional probability is at most $3q^{-k}$ and the weight there is at most $B^2$. On the function side $u\sim\Bin(q,\rho)$, so the weighted tail is bounded by $e^4\sum_{j>m}12^j/j!$. The triangle inequality therefore gives
+\begin{align}
+ \|\E(\mu_T\otimes\mu_T)-\mu_*\otimes\mu_*\|_1
+ &\le \epsilon_k,\nonumber\\
+ \epsilon_k&=2e^4 4^m(2^k+1)3^k/k!
+       +3q^{-k}B^2+e^4\sum_{j>m}12^j/j! .\label{eq:eps}
+\end{align}
+Successive terms of $B$ going down from $\ell$ have ratio at most $\ell/(q-\ell+1)<1/2$. Hence $B\le2q^\ell/\ell!$ and the middle term is at most $12/(\ell!)^2$. Stirling's bound on all three terms (with a geometric tail bound beyond $m$ for large $k$) yields $\epsilon_k\le\exp[-k\log k+O(k)]$. The bound is asymptotic and its constants are large. For example, for every $k\ge2048$ the three terms are bounded in sum by $400(0.52)^k$. Indeed $n!\ge(n/e)^n$ bounds the first two by $4e^4(384e/k)^k$ and $12(2e/k)^k$ respectively. The tail is at most $2e^4[12e/(3k-2)]^{3k-2}$ by a geometric sum. Thus $u_k\le25 k^3(0.52)^{k/2}<1$ throughout this range. This sufficient cutoff is deliberately conservative.
+
+\section{From pair concentration to an adaptive experiment}
+Since $\mu_T$ is normalized on every table, marginalization in~\eqref{eq:eps} gives $\|\E\mu_T-\mu_*\|_1\le\epsilon_k$. Take the diagonal in the second moment and bound the cross term by $2\|\E\mu_T-\mu_*\|_1$, since $\|\mu_*\|_\infty\le1$. Thus $\sum_s\E(\mu_T(s)-\mu_*(s))^2\le3\epsilon_k$. Cauchy--Schwarz, Jensen's inequality and~\eqref{eq:env} yield
+\begin{equation}\label{eq:uk}
+ \E D_T\le u_k=\frac d2\sqrt{3(q+1)\epsilon_k},\qquad
+ D_T=\sup_w\TV(p_{T,w},p_{*,w}).
+\end{equation}
+For fixed $T$ use shared policy coins and a maximal coupling of the next two scores while histories agree. At equal histories the settings and stopping decisions agree, and the conditional divergence probability is at most $D_T$. By the union bound the stopped transcript distance is at most $R D_T$. Average once over $T$ for the first claim of Theorem~\ref{thm:main}, and use Markov's inequality on $D_T$ for its conditional claim. The triangle inequality compares the two ensembles.
+
+\paragraph{Cost and precision.}
+The reference samples only a score. For each $s,t$ one can compute the numerator of $U_t(s)$ by integer binomial sums and its positive denominator by square root. These integers and binomials have $O(q+\log q)$ bits. With normalized, efficiently specified weights, tabulate the $q+1$ masses and round the cumulative distribution to a dyadic grid. For example, evaluating each $U_t$ and each real and imaginary weight component to absolute error $2^{-p}$ gives $O(d2^{q/2-p})$ absolute error in $F_w$ since $|U_t|\le2^{q/2}$. The corresponding absolute mass error per bin is $O(d^2 2^{q-p})$ if products and sums are carried to the same precision or evaluated exactly as dyadics. Choosing $p=O(q+\log(qd/\delta))$ with sufficiently large constants, then clipping and normalizing the masses, permits TV error at most $\delta$, including cumulative rounding. Time is polynomial in $q,k,\log(1/\delta)$ and the weight evaluation cost. Computing the policy's choice of weights has its own cost. A normalized weight perturbation $w\to w'$ costs at most $\|w-w'\|_2$ in TV by orthonormality and Cauchy--Schwarz applied to the difference of squared moduli. Uniform conditional per-shot TV errors $\eta_i$ add at most $\sum_i\eta_i$ per process by the same coupling. In explicit sorted-list encoding the table takes $\Theta(q^2\log q)$ bits; verifying an actual assignment uses $O(qk)$ field operations and at most a table scan. The simulator never recovers an assignment realizing its sampled score.
+
+\section{The cost of observing a high-scoring witness}\label{sec:witness}
+Let $D=\sum_{t=0}^\ell\binom qt(q-1)^t$. Before the last Fourier transform, a product of at most $\ell$ row functions has coefficient frequencies of the form $\sum_x v_x(1,x,\ldots,x^{k-1})$ with $|\operatorname{supp}v|\le\ell$, by expanding each row function in additive characters. Distinct such vectors give distinct syndromes: their difference has support at most $2\ell\le k$ and its first as many moment equations form an invertible Vandermonde system. Thus there are $D$ available frequencies. Cauchy--Schwarz bounds each output probability by $D/q^k$ for any state with this support~\cite{childs}. For the standard balanced score state one has the sharper bound $B/q^k$ from $|F_w|^2\le\sum U_t^2\le B$. At a perfect fit it is attained by the table-independent weights $w_t=\sqrt{\binom qt/B}$. A set of $G$ assignments therefore carries at most $\min(1,GB/q^k)$ for these states.
+
+\begin{prop}\label{prop:witness}
+Put $v=\lceil\sqrt{qk\log_2q}\rceil$ and $\tau=(q+k)/2+v$. With probability at least $1-q^{-k}$ over a null table, no score exceeds $\tau$. With at least the same probability over a planted table, $P$ is the unique assignment exceeding $\tau$. On each such planted table the optimal number of independent fresh preparations to measure a qualifying assignment with probability at least $2/3$ is $\Theta(q^k/B)$, allowing adaptive degree weights.
+\end{prop}
+\begin{proof}
+Here $\tau/q\le 1/2+1/(2k^3)+\sqrt{4\log_2 k/k^3}+1/k^4<1$ for $k\ge4$. Under the null a fixed assignment has independent fair hits. On the planted side $P$ scores $q$; any $A\ne P$ agrees with it in $r\le k-1$ positions and has score $r+\Bin(q-r,(q/2-1)/(q-1))$, of mean at most $(q+k-1)/2$. By Hoeffding's inequality~\cite{hoeffding}, the expected number of qualifying null assignments or planted competitors is at most $q^k e^{-2v^2/q}\le q^{-k}$. Markov's inequality gives the two table claims. On the stated planted tables an adaptive union bound gives success probability at most $RB/q^k$ by shot $R$. Repeating the optimal weights gives success probability $1-(1-B/q^k)^R$, which proves the upper bound as well. Both bounds grant ideal fresh preparations. A coherent amplitude-amplification algorithm would use a different experiment and is outside this repetition bound.
+\end{proof}
+In this scaling $B/q^k=(1+o(1))/(q^\ell\ell!)$, by the ratio of successive terms and $\ell^2/q=o(1)$. Missing that single witness only resolves a threshold test. Theorem~\ref{thm:main} additionally controls decisions using scores throughout the bulk. It gives neither a worst-case decision algorithm on written lists nor a simulation of coefficient readout or coherent multi-register measurements.
+
+\paragraph{Reproducibility.}
+The accompanying exact-arithmetic scripts check the score envelope and joint pair kernel by enumerating all 1,296 balanced null tables over $\F_4$ at $k=2$, and all 81 planted tables for each of two plants. A second check enumerates six small tables, including examples with multiple perfect fits, and computes exact witness first moments at $q=256,k=4$. The four-element-field check is outside the scaling $q=k^4$; it tests the finite identities directly. The asymptotic estimates follow from the proof above. Source, scripts and review notes accompany the \href{https://github.com/Quantyra/planted-dqi-score-transcripts}{manuscript repository}. AI tools assisted with drafting and technical review.
+
+\begin{thebibliography}{9}
+\bibitem{jordan} S.\ P.\ Jordan et al., \emph{Optimization by decoded quantum interferometry}, Nature (2025). \href{https://doi.org/10.1038/s41586-025-09527-5}{doi:10.1038/s41586-025-09527-5}; \href{https://arxiv.org/abs/2408.08292}{arXiv:2408.08292}.
+\bibitem{gil} E.\ Gil-Fuster, M.\ Ninio, L.\ Bittel, Y.\ Shimoni, J.\ Eisert, S.\ Woerner and A.\ Carrera V\'azquez, \emph{Approximate sampling from decoded quantum interferometry via Markov chain Monte Carlo methods} (2026), \href{https://arxiv.org/abs/2607.28120}{arXiv:2607.28120}.
+\bibitem{mazumder} R.\ Mazumder and P.\ Niroula, \emph{Discovering new problems for decoded quantum interferometry} (2026), \href{https://arxiv.org/abs/2610.06753}{arXiv:2610.06753}.
+\bibitem{bazzi} L.\ Bazzi, \emph{Weight distribution of cosets of small codes with good dual properties}, \href{https://arxiv.org/abs/1408.5681}{arXiv:1408.5681}.
+\bibitem{childs} A.\ M.\ Childs, W.\ van Dam, S.-H.\ Hung and I.\ E.\ Shparlinski, \emph{Optimal quantum algorithm for polynomial interpolation}, ICALP (2016), \href{https://doi.org/10.4230/LIPIcs.ICALP.2016.16}{doi:10.4230/LIPIcs.ICALP.2016.16}.
+\bibitem{hoeffding} W.\ Hoeffding, \emph{Probability inequalities for sums of bounded random variables}, JASA 58 (1963), 13--30. \href{https://doi.org/10.1080/01621459.1963.10500830}{doi:10.1080/01621459.1963.10500830}.
+\end{thebibliography}
+\end{document}
